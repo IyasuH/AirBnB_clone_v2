@@ -19,14 +19,12 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
-            json.dump(temp, f)
+        json_dict = {}
+        for k, v in FileStorage.__objects.items():
+            json_dict[k] = v.to_dict()
+        with open(FileStorage.__file_path, mode="w", encoding='utf-8') as x:
+            x.write(json.dumps(json_dict))
 
-    #
     def delete(self, obj=None):
         """To delete obj from __objects if it's inside
         -if obj is equal to None the method should not do anything"""
