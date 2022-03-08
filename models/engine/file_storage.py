@@ -6,12 +6,20 @@ import json
 class FileStorage:
     """
     This class manages storage of hbnb models in JSON format"""
+    #forFileStorage getter attr cities that returns the list of city...
     __file_path = 'file.json'
     __objects = {}
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        return FileStorage.__objects
+        temp = {}
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            for key, value in FileStorage.__objects.items():
+                if type(value) is cls:
+                    temp[key] = value
+                return temp
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -19,11 +27,17 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        json_dict = {}
+        with open(FileStorage.__file_path, 'w') as f:
+            temp = {}
+            temp.update(FileStorage.__objects)
+            for key, val in temp.items():
+                temp[key] =  val.to_dict()
+            json.dump(temp, f)
+        """json_dict = {}
         for k, v in FileStorage.__objects.items():
             json_dict[k] = v.to_dict()
         with open(FileStorage.__file_path, mode="w", encoding='utf-8') as x:
-            x.write(json.dumps(json_dict))
+            x.write(json.dumps(json_dict))"""
 
     def delete(self, obj=None):
         """To delete obj from __objects if it's inside
