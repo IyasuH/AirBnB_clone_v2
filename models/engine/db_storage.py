@@ -37,6 +37,7 @@ class DBStorage():
             # Add up Amenity, Place, Review
             query_obj = self.__session.query(State).all()
             query_obj.extend(self.__session.query(City).all())
+            query_obj.extend(self.__session.query(User).all())
 
         else:
             query_obj = self.__session.query(cls)
