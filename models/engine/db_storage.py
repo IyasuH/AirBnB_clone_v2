@@ -33,19 +33,23 @@ class DBStorage():
 
     def all(self, cls=None):
         """Query"""
+        dic = {}
         if cls is None:
             # Add up Amenity, Place, Review
             query_obj = self.__session.query(State).all()
             query_obj.extend(self.__session.query(City).all())
             query_obj.extend(self.__session.query(User).all())
             query_obj.extend(self.__session.query(Place).all())
+            query_obj.extend(self.__session.query(Review).all())
 
         else:
             if type(cls) == str:
                 cls = eval(cls)
             query_obj = self.__session.query(cls)
         for obj in query_obj:
-            return {"{}.{}".format(type(obj).__name__, obj.id): obj}
+            key = (type(obj).__name__) + "." + obj.id
+            dic[key] = obj
+            return dic
 
     def new(self,obj):
         """ add objects to the cursent databse session"""
