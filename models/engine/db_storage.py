@@ -33,7 +33,7 @@ class DBStorage():
 
     def all(self, cls=None):
         """Query"""
-        if (cls == None):
+        if cls is None:
             # Add up Amenity, Place, Review
             query_obj = self.__session.query(State).all()
             query_obj.extend(self.__session.query(City).all())
