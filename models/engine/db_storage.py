@@ -41,6 +41,8 @@ class DBStorage():
             query_obj.extend(self.__session.query(Place).all())
 
         else:
+            if type(cls) == str:
+                cls = eval(cls)
             query_obj = self.__session.query(cls)
         for obj in query_obj:
             return {"{}.{}".format(type(obj).__name__, obj.id): obj}
