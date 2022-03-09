@@ -1,11 +1,18 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
 from models.review import Review
+from models.amenity import Amenity
 import os
 import models
+
+metadata = Base.metadata
+place_amenity = Table('place_amenity', metadata,
+                          Column('place_id', String(60), ForeignKey("places.id"), primary_key=True, nullable=False),
+                          Column('amenity_id', String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False))
+
 
 
 class Place(BaseModel, Base):
@@ -23,7 +30,8 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     reviews = relationship("Review", backref="place", cascade="all, delete-orphan")
-
+    amenities = relationship("Amenity", secondary=place_amenity, viewonly=False)
+    
     if (os.getenv('HBNB_TYPE_STORAGE') != 'db'):
         @property
         def reviews(self):
@@ -36,3 +44,24 @@ class Place(BaseModel, Base):
                 if value.place_id == self.id:
                     list_reviews.append(value)
             return list_reviews
+        @property
+        def amenities(self):
+            """
+            getter attribute that return the list of Amenity instance
+	    based on attribute amenity_ids that contains all Amenity.id linked
+	    to the place
+            """
+            list_amenity = []
+            for key, value in list(models.storage.all(Amenity)):
+                if value.id in self.amenity_ids:
+                    list_amenity.append(value)
+            return list_amenity
+        @amenities.setter
+        def amenities(self, Amenity):
+            """
+            setter attribute that handles append method for adding an
+            Amenity.id to the attribute amenity_ids. should accept only
+            Amenity object otherwise do nothing
+            """
+            if Amenity:
+                self.amenity_ids.append(Amenity.id)
