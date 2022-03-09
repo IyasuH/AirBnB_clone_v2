@@ -38,6 +38,7 @@ class DBStorage():
             query_obj = self.__session.query(State).all()
             query_obj.extend(self.__session.query(City).all())
             query_obj.extend(self.__session.query(User).all())
+            query_obj.extend(self.__session.query(Place).all())
 
         else:
             query_obj = self.__session.query(cls)
