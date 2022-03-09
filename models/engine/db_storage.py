@@ -49,7 +49,7 @@ class DBStorage():
         for obj in query_obj:
             key = (type(obj).__name__) + "." + obj.id
             dic[key] = obj
-            return dic
+        return dic
 
     def new(self,obj):
         """ add objects to the cursent databse session"""
