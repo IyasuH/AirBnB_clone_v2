@@ -92,6 +92,8 @@ class HBNBCommand(cmd.Cmd):
             print('(hbnb) ', end='')
         return stop
 
+
+
     def do_quit(self, command):
         """ Method to exit the HBNB console"""
         exit()
@@ -217,14 +219,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        if args != "" and args not in self.classes:
-            print("** class doesn't exist **")
+        if args:
+            arg = args.split(" ")
+            if (arg[0] not in HBNBCommand.classes):
+                print("** class doesn't exist **")
+                return
+            obj = storage.all(eval(arg[0]))
+            print([obj[k].__str__() for k in obj])
         else:
-            all_objs = storage.all()
-            list1 = []
-            for key, value in all_objs.items():
-                list1.append(str(value))
-            print(list1)
+            obj = storage.all()
+            print([obj[k].__str__() for k in obj])
+            return
 
     def help_all(self):
         """ Help information for the all command """
