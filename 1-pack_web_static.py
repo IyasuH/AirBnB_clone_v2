@@ -16,6 +16,7 @@ def do_pack():
     name = "web_static_" + str(now.year) + str(now.month) + str(
             now.day) + str(now.hour) + str(now.minute)
     local("mkdir -p versions")
+    print("Packing web_static to versions/{}.tgz".format(name))
     local("tar -czvf versions/{}.tgz web_static".format(name))
     try:
         f = open("versions/{}.tgz".format(name))
