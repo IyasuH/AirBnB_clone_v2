@@ -14,8 +14,8 @@ def do_pack():
     function to genrate .tgz file
     """
     now = datetime.datetime.now()
-    name = "web_static_" + str(now.year) + str(now.month) +
-    str(now.day) + str(now.hour) + str(now.minute)
+    name = "web_static_" + str(now.year) + str(now.month) + str(
+            now.day) + str(now.hour) + str(now.minute)
     local("mkdir -p versions")
     local("tar -czvf versions/{}.tgz web_static".format(name))
     try:
