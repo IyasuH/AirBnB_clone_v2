@@ -27,4 +27,5 @@ def do_pack():
         print(rt)
         return(rt)
     except IOError:
+        print(None)
         return(None)
