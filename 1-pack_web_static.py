@@ -22,9 +22,9 @@ def do_pack():
         f.close()
         path = os.path.relpath('versions/{}.tgz'.format(name), start=None)
         file_size = os.stat('versions/{}.tgz'.format(name)).st_size
+        re = "versions/{}.tgz".format(name)
         rt = "web_static packed: {} -> {}Bytes".format(path, file_size)
         print(rt)
-        return(rt)
+        return (re)
     except IOError:
-        print(None)
-        return(None)
+        return (None)
