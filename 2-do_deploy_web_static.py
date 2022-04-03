@@ -14,21 +14,23 @@ def do_deploy(archive_path):
     """
     deploy
     """
-    if os.path.exists(archive_path):
-        path = 'data/web_static/releases/'
-        noExt = archive_path.split('.')[0]
-        noPar = noExt.split('/')[1]
-        tru = path + noPar
-        try:
-            put(archive_path, "/tmp")
-            run("sudo mkdir -p {}".format(tru))
-            run("sudo tar -xzf /tmp/{}.tgz -C {}".format(noPar, tru))
-            run("sudo rm -f /tmp/{}.tgz".format(noPar))
-            run("sudo rm /data/web_static/current")
-            lin = "/data/web_static/releases/{}".format(noPar)
-            run("sudo ln -sf {} /data/web_static/current".format(lin))
-            return True
-        except Exception as e:
-            return False
-    else:
+    if not os.path.exists(archive_path):
+        return False
+    path = '/data/web_static/releases/'
+    noExt = archive_path.split('.')[0]
+    noPar = noExt.split('/')[1]
+    tru = path + noPar
+    try:
+        put(archive_path, "/tmp")
+        run("sudo mkdir -p {}".format(tru))
+        run("sudo tar -xzf /tmp/{}.tgz -C {}".format(noPar, tru))
+        run("sudo rm -f /tmp/{}.tgz".format(noPar))
+        fun("sudo mv {}/web_static/* {}/".format(tru, tru))
+        run("sudo rm -rf {}/web_static".format(tru))
+        run("sudo rm -rf /data/web_static/current")
+        run("sudo ln -sf {} /data/web_static/current".format(tru))
+        print("path exists")
+        return True
+    except Exception as e:
+        print("exception raised")
         return False
