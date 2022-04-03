@@ -14,8 +14,8 @@ def do_pack():
     """
     now = datetime.datetime.now()
     name = "web_static_" + str(
-            now.year) + '%02d' % now.month + '%02d' % now.day +
-    '%02d' % now.hour + str(now.minute) + str(now.second)
+            now.year) + '%02d' % now.month + '%02d' % now.day + str(
+                    now.hour) + str(now.minute) + str(now.second)
     local("mkdir -p versions")
     print("Packing web_static to versions/{}.tgz".format(name))
     local("tar -czvf versions/{}.tgz web_static".format(name))
