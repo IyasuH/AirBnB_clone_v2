@@ -25,12 +25,10 @@ def do_deploy(archive_path):
         run("sudo mkdir -p {}".format(tru))
         run("sudo tar -xzf /tmp/{}.tgz -C {}".format(noPar, tru))
         run("sudo rm -f /tmp/{}.tgz".format(noPar))
-        fun("sudo mv {}/web_static/* {}/".format(tru, tru))
+        run("sudo mv {}/web_static/* {}/".format(tru, tru))
         run("sudo rm -rf {}/web_static".format(tru))
         run("sudo rm -rf /data/web_static/current")
         run("sudo ln -sf {} /data/web_static/current".format(tru))
-        print("path exists")
         return True
     except Exception as e:
-        print("exception raised")
         return False
