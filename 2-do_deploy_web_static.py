@@ -15,7 +15,7 @@ def do_deploy(archive_path):
     deploy
     """
     if os.path.exists(archive_path):
-        path  = 'data/web_static/releases/'
+        path = 'data/web_static/releases/'
         noExt = archive_path.split('.')[0]
         noPar = noExt.split('/')[1]
         tru = path + noPar
