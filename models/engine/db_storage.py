@@ -76,7 +76,7 @@ class DBStorage():
         self.__session = Session()
 
     def close(self):
-        """call reload"""
+        """defines the session then close attribute"""
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
                 bind=self.__engine,
