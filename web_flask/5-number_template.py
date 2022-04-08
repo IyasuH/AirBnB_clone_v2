@@ -55,7 +55,7 @@ def number_di(n):
 @app.route('/number_template/<int:n>')
 def number_temp(n):
     """display HTML page only if n is an integer"""
-    return render_template('5-number.html')
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
