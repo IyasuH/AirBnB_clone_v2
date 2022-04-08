@@ -6,7 +6,6 @@ import json
 class FileStorage:
     """
     This class manages storage of hbnb models in JSON format"""
-    #forFileStorage getter attr cities that returns the list of city...
     __file_path = 'file.json'
     __objects = {}
 
@@ -31,7 +30,7 @@ class FileStorage:
             temp = {}
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
-                temp[key] =  val.to_dict()
+                temp[key] = val.to_dict()
             json.dump(temp, f)
         """json_dict = {}
         for k, v in FileStorage.__objects.items():
@@ -70,3 +69,7 @@ class FileStorage:
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
+
+    def close(self):
+        """method for deserializing the JSON file to objects"""
+        self.reload()

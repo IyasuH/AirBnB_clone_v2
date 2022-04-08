@@ -21,12 +21,14 @@ class DBStorage():
     """
     __engine = None
     __session = None
+
     def __init__(self):
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(os.getenv('HBNB_MYSQL_USER'),
-                                                                           os.getenv('HBNB_MYSQL_PWD'),
-                                                                           os.getenv('HBNB_MYSQL_HOST'),
-                                                                           os.getenv('HBNB_MYSQL_DB')),
-                                      pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            os.getenv('HBNB_MYSQL_USER'),
+            os.getenv('HBNB_MYSQL_PWD'),
+            os.getenv('HBNB_MYSQL_HOST'),
+            os.getenv('HBNB_MYSQL_DB')),
+            pool_pre_ping=True)
         if os.getenv("HBNB_ENV") == "test":
             """drop alltables"""
             Base.metadata.drop_all(self.__engine)
@@ -51,7 +53,7 @@ class DBStorage():
             dic[key] = obj
         return dic
 
-    def new(self,obj):
+    def new(self, obj):
         """ add objects to the cursent databse session"""
         self.__session.add(obj)
 
@@ -64,8 +66,21 @@ class DBStorage():
         self.__session.delete(obj)
 
     def reload(self):
-        """create all tables in the database, create the current database session"""
+        """create all tables in the database,
+        create the current database session"""
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(
+                bind=self.__engine,
+                expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """call reload"""
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(
+                bind=self.__engine,
+                expire_on_commit=False)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
+        Session.close()
