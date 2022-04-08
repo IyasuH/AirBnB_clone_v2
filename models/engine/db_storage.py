@@ -77,10 +77,4 @@ class DBStorage():
 
     def close(self):
         """defines the session then close attribute"""
-        Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(
-                bind=self.__engine,
-                expire_on_commit=False)
-        Session = scoped_session(session_factory)
-        self.__session = Session()
-        Session.close()
+        self.__session.close()
