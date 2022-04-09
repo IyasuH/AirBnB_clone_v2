@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """
+Start a Flask web application on 0.0.0.0 port 5000
 """
 from flask import Flask, render_template
 from models import storage
-import models
 from models.state import State
 from sqlalchemy.orm import relationship
 from models.city import City
