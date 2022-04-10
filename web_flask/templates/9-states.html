@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+	    {% if x is divisibleby 2 %}
+	    <H1>States: {{ stat.name }}</H1>
+	    <H3>Cities:</H3>
+	    <UL>
+		    {% for city in stat.cities|sort(attribute='name') %}
+		    <LI>{{ city.id }}: <B></B>{{ city.name }}</LI>
+		    {% endfor %}
+	    </UL>
+	    {% else %}
+	    <H1>Not found!</H1>
+	    {% endif %}
+    </BODY>
+</HTML>
