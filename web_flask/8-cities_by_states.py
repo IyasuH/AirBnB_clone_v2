@@ -20,7 +20,6 @@ def teardown(self):
 def city_state():
     """cities by states"""
     state = list(storage.all(State).values())
-    #for stat in state:
     return render_template('8-cities_by_states.html', state=state)
 
 
