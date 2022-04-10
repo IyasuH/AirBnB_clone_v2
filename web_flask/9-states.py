@@ -19,7 +19,7 @@ def teardown(self):
 def state_list():
     """cities by states"""
     state = list(storage.all(State).values())
-    return render_template('7-states_list.html', state=state)
+    return render_template('9-states.html', x=3, stat=state)
 
 
 @app.route('/states/<n>')

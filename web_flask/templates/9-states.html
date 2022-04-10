@@ -4,7 +4,14 @@
         <TITLE>HBNB</TITLE>
     </HEAD>
     <BODY>
-	    {% if x is divisibleby 2 %}
+	    {% if x is divisibleby 3 %}
+	    <H1>States</H1>
+	    <UL>
+		    {% for state in stat|sort(attribute='name') %}
+		    <LI>{{ state.id }}:<B>{{ state.name }}</B></LI>
+		    {% endfor %}
+	    </UL>
+	    {% elif x is divisibleby 2 %}
 	    <H1>States: {{ stat.name }}</H1>
 	    <H3>Cities:</H3>
 	    <UL>
